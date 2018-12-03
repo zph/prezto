@@ -123,10 +123,15 @@ function pmodload {
         done
       }
 
-      if [[ -s "${pmodule_location}/init.zsh" ]]; then
-        source "${pmodule_location}/init.zsh"
-      elif [[ -s "${pmodule_location}/${pmodule}.plugin.zsh" ]]; then
-        source "${pmodule_location}/${pmodule}.plugin.zsh"
+      local init_variant="${pmodule_location}/init.zsh"
+      local plugin_variant="${pmodule_location}/${pmodule}.plugin.zsh"
+      local plain_variant="${pmodule_location}/${pmodule}.zsh"
+      if [[ -s "$init_variant" ]]; then
+        source "$init_variant"
+      elif [[ -s "$plugin_variant" ]]; then
+        source "$plugin_variant"
+      elif [[ -s "$plain_variant" ]]; then
+        source "$plain_variant"
       fi
 
       if (( $? == 0 )); then
